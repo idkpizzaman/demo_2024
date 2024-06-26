@@ -11,20 +11,20 @@ import com.example.demo.interceptor.NeedLogoutInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	private BeforeActionInterceptor beforActionInterceptor;
+	private BeforeActionInterceptor beforeActionInterceptor;
 	private NeedLoginInterceptor needLoginInterceptor;
 	private NeedLogoutInterceptor needLogoutInterceptor;
 
-	public WebConfig(BeforeActionInterceptor beforActionInterceptor, NeedLoginInterceptor needLoginInterceptor,
+	public WebConfig(BeforeActionInterceptor beforeActionInterceptor, NeedLoginInterceptor needLoginInterceptor,
 			NeedLogoutInterceptor needLogoutInterceptor) {
-		this.beforActionInterceptor = beforActionInterceptor;
+		this.beforeActionInterceptor = beforeActionInterceptor;
 		this.needLoginInterceptor = needLoginInterceptor;
 		this.needLogoutInterceptor = needLogoutInterceptor;
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(beforActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
+		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
 
 		registry.addInterceptor(needLoginInterceptor).addPathPatterns("/usr/article/write")
 				.addPathPatterns("/usr/article/doWrite").addPathPatterns("/usr/article/modify")

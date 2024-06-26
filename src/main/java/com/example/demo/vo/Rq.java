@@ -17,8 +17,8 @@ public class Rq {
 	private HttpSession session;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
-		this.resp = resp;
 		
+		this.resp = resp;
 		this.session = req.getSession();
 
 		int loginedMemberId = 0;
@@ -41,10 +41,10 @@ public class Rq {
 	}
 
 	public void login(Member member) {
-		session.setAttribute("loginedMember", member.getId());
+		this.session.setAttribute("loginedMemberId", member.getId());
 	}
 
 	public void logout() {
-		session.removeAttribute("loginedMemberId");
+		this.session.removeAttribute("loginedMemberId");
 	}
 }

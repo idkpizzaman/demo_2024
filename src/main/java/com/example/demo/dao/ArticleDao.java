@@ -12,7 +12,7 @@ import com.example.demo.vo.Article;
 
 @Mapper
 public interface ArticleDao {
-	
+
 	@Insert("""
 			INSERT INTO article
 				SET regDate = NOW()
@@ -31,7 +31,7 @@ public interface ArticleDao {
 				ORDER BY A.id DESC
 			""")
 	public List<Article> getArticles();
-	
+
 	@Select("""
 			SELECT A.*, M.nickname `writerName`
 				FROM article A
@@ -40,7 +40,7 @@ public interface ArticleDao {
 				WHERE A.id = #{id}
 			""")
 	public Article forPrintArticle(int id);
-	
+
 	@Select("""
 			SELECT *
 				FROM article
@@ -52,12 +52,8 @@ public interface ArticleDao {
 			<script>
 			UPDATE article
 				SET updateDate = NOW()
-					<if test="title != null and title != ''">
-						, title = #{title}
-					</if>
-					<if test="body != null and body != ''">
-						, `body` = #{body}
-					</if>
+					, title = #{title}
+					, `body` = #{body}
 				WHERE id = #{id}
 			</script>
 			""")

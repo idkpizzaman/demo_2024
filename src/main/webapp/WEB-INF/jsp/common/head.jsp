@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
-<!-- 테일윈드 -->
+<!-- 데이지UI, 테일윈드 -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.8/dist/full.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- 폰트어썸 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -23,10 +24,10 @@
         <ul class="flex">
             <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/"><span>HOME</span></a></li>
             <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list"><span>LIST</span></a></li>
-            <c:if test='${rq.getLoginedMemberId == 0 }'>
+            <c:if test='${rq.getLoginedMemberId() == 0 }'>
                 <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/login"><span>LOGIN</span></a></li>
             </c:if>
-            <c:if test='${rq.getLoginedMemberId != 0 }'>
+            <c:if test='${rq.getLoginedMemberId() != 0 }'>
                 <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/doLogout"><span>LOGOUT</span></a></li>
             </c:if>
         </ul>

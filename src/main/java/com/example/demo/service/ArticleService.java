@@ -36,7 +36,7 @@ public class ArticleService {
 	}
 	
 	public void modifyArticle(int id, String title, String body) {
-		this.articleDao.modifyArticle(id, title, body);	
+		this.articleDao.modifyArticle(id, title, body);
 	}
 	
 	public int getLastInsertId() {

@@ -56,6 +56,11 @@ public class UsrMemberController {
 
 		return ResultData.from("S-1", String.format("%s님이 가입되었습니다", nickname), memberService.getMemberById(id));		
 	}
+
+	@GetMapping("/usr/member/login")
+	public String login() {
+		return "usr/member/login";
+	}
 	
 	@PostMapping("/usr/member/doLogin")
 	@ResponseBody
@@ -75,12 +80,7 @@ public class UsrMemberController {
 		
 		rq.login(member);
 		
-		return Util.jsReplace(String.format("%s님 환영합니다!", member.getNickname()), "/");
-	}
-	
-	@GetMapping("/usr/member/login")
-	public String login() {
-		return "usr/member/login";
+		return Util.jsReplace(String.format("[%s]님 환영합니다!", member.getNickname()), "/");
 	}
 	
 	@GetMapping("/usr/member/doLogout")
@@ -90,6 +90,6 @@ public class UsrMemberController {
 		
 		rq.logout();
 
-		return Util.jsHistoryBack("정상적으로 로그아웃 되었습니다.");
+		return Util.jsReplace("정상적으로 로그아웃 되었습니다.", "/");
 	}
 }

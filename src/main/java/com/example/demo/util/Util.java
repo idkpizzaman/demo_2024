@@ -40,7 +40,7 @@ public class Util {
 						alert(msg);
 					}
 					
-					location.replace('/usr/home/main');
+					history.back();
 				</script>
 			""", msg);
 	}
