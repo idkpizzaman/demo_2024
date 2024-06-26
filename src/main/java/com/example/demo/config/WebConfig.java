@@ -4,18 +4,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.example.demo.interceptor.BeforActionInterceptor;
+import com.example.demo.interceptor.BeforeActionInterceptor;
 import com.example.demo.interceptor.NeedLoginInterceptor;
 import com.example.demo.interceptor.NeedLogoutInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	private BeforActionInterceptor beforActionInterceptor;
+	private BeforeActionInterceptor beforActionInterceptor;
 	private NeedLoginInterceptor needLoginInterceptor;
 	private NeedLogoutInterceptor needLogoutInterceptor;
 
-	public WebConfig(BeforActionInterceptor beforActionInterceptor, NeedLoginInterceptor needLoginInterceptor,
+	public WebConfig(BeforeActionInterceptor beforActionInterceptor, NeedLoginInterceptor needLoginInterceptor,
 			NeedLogoutInterceptor needLogoutInterceptor) {
 		this.beforActionInterceptor = beforActionInterceptor;
 		this.needLoginInterceptor = needLoginInterceptor;

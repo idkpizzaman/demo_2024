@@ -9,7 +9,9 @@ import com.example.demo.service.MemberService;
 import com.example.demo.util.Util;
 import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
+import com.example.demo.vo.Rq;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -57,7 +59,9 @@ public class UsrMemberController {
 	
 	@PostMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpSession session, String loginId, String loginPw) {
+	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
+		
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		Member member = memberService.getMemberByLoginId(loginId);
 		
@@ -69,7 +73,7 @@ public class UsrMemberController {
 			return Util.jsHistoryBack("비밀번호가 잘못되었습니다.");
 		}
 		
-		session.setAttribute("loginedMember", member.getId());
+		rq.login(member);
 		
 		return Util.jsReplace(String.format("%s님 환영합니다!", member.getNickname()), "/");
 	}
@@ -81,8 +85,10 @@ public class UsrMemberController {
 	
 	@GetMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpSession session) {
-		session.removeAttribute("loginedMemberId");
+	public String doLogout(HttpServletRequest req) {
+		Rq rq = (Rq) req.getAttribute("rq");
+		
+		rq.logout();
 
 		return Util.jsHistoryBack("정상적으로 로그아웃 되었습니다.");
 	}
