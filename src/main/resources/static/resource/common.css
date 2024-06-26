@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'NanumSquareNeoVariable';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeo-Variable.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeo-Variable.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeo-Variable.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeo-Variable.ttf) format("truetype");
+}
+
+html > body {
+    font-family: 'NanumSquareNeoVariable';
+    text-underline-position: under;
+}
+
+.btns > button, .btns > a {
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 5px;
+}
+
+.btns > button:hover, .btns > a:hover {
+    background-color: black;
+    color: white;
+}
+
+.table-box-type > table {
+    width: 100%;
+}
+
+.table-box-type > table th, .table-box-type > table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
