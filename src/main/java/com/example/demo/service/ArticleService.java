@@ -23,8 +23,8 @@ public class ArticleService {
 		return this.articleDao.forPrintArticle(id);
 	}
 	
-	public List<Article> getArticles() {
-		return this.articleDao.getArticles();
+	public List<Article> getArticles(int boardId) {
+		return this.articleDao.getArticles(boardId);
 	}
 	
 	public void deleteArticle(int id) {
@@ -41,5 +41,9 @@ public class ArticleService {
 	
 	public int getLastInsertId() {
 		return this.articleDao.getLastInsertId();
+	}
+	
+	public String getBoardNameById(int boardId) {
+		return this.articleDao.getBoardNameById(boardId);
 	}
 }

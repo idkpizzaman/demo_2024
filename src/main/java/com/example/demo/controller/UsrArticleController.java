@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.Util;
 import com.example.demo.vo.Article;
-import com.example.demo.vo.ResultData;
+import com.example.demo.vo.Rq;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UsrArticleController {
@@ -24,25 +24,22 @@ public class UsrArticleController {
 		this.articleService = articleService;
 	}
 	
-	@GetMapping("/usr/article/doWrite")
+	@GetMapping("/usr/article/write")
+	public String write() {
+		return "usr/article/write";
+	}
+	
+	@PostMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(HttpSession session, String title, String body) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return ResultData.from("F-L", "로그인 후 이용해주세요.");			
-		}
+	public String doWrite(HttpServletRequest req, String title, String body) {
 		
-		if (Util.isEmpty(title)) {
-			return ResultData.from("F-1", "제목을 입력해주세요");
-		}
-		if (Util.isEmpty(body)) {
-			return ResultData.from("F-2", "내용을 입력해주세요");
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
 		
-		articleService.writeArticle((int) session.getAttribute("loginedMemberId"), title, body);
+		articleService.writeArticle(rq.getLoginedMemberId(), title, body);
 		
 		int id = articleService.getLastInsertId();
 		
-		return ResultData.from("S-1", String.format("%d번 게시물이 작성되었습니다.", id), articleService.getArticleById(id));
+		return Util.jsReplace(String.format("%d번 게시물을 작성했습니다", id), String.format("detail?id=%d", id));
 	}
 	
 	@PostMapping("/usr/article/doModify")
@@ -63,10 +60,13 @@ public class UsrArticleController {
 	}
 	
 	@GetMapping("/usr/article/list")
-	public String list(Model model) {
+	public String list(Model model, int boardId) {
 		
-		List<Article> articles = articleService.getArticles();
+		String boardName = articleService.getBoardNameById(boardId);
 		
+		List<Article> articles = articleService.getArticles(boardId);
+		
+		model.addAttribute("boardName", boardName);
 		model.addAttribute("articles", articles);
 		
 		return "usr/article/list";

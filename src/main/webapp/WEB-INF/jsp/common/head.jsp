@@ -19,11 +19,11 @@
 </head>
 <body>
     <div class="h-20 flex container mx-auto text-3xl">
-        <div><a class="h-full px-3 flex items-center" href="/"><span>로고</span></a></div>
+        <div class="h-3 mt-20"><a class="h-full px-3 flex items-center" href="/"><img src="https://celclipmaterialprod.s3-ap-northeast-1.amazonaws.com/01/16/2001601/thumbnail?1683872956" alt="로고" /></a></div>
         <div class="grow"></div>
         <ul class="flex">
-            <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/"><span>HOME</span></a></li>
-            <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list"><span>LIST</span></a></li>
+            <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=1"><span>NOTICE</span></a></li>
+            <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=2"><span>FREE</span></a></li>
             <c:if test='${rq.getLoginedMemberId() == 0 }'>
                 <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/login"><span>LOGIN</span></a></li>
             </c:if>
@@ -32,9 +32,13 @@
             </c:if>
         </ul>
     </div>
-    
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <section class="my-3 text-2xl">
         <div class="container mx-auto px-3">
-            <div>${pageTitle }&nbsp;PAGE</div>
+            <div>${pageTitle }</div>
         </div>
     </section>
