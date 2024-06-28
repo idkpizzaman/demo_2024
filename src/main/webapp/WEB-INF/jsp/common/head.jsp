@@ -16,10 +16,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- 공통 css -->
 <link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
     <div class="h-20 flex container mx-auto text-3xl">
-        <div class="h-3 mt-20"><a class="h-full px-3 flex items-center" href="/"><img src="https://celclipmaterialprod.s3-ap-northeast-1.amazonaws.com/01/16/2001601/thumbnail?1683872956" alt="로고" /></a></div>
+        <div class="h-3 mt-20"><a class="h-full px-3 flex items-center" href="/"><img class="h-100 w-100 flex justify-left" src="https://celclipmaterialprod.s3-ap-northeast-1.amazonaws.com/01/16/2001601/thumbnail?1683872956" alt="로고" /></a></div>
         <div class="grow"></div>
         <ul class="flex">
             <li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=1"><span>NOTICE</span></a></li>

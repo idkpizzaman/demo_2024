@@ -23,8 +23,8 @@ public class ArticleService {
 		return this.articleDao.forPrintArticle(id);
 	}
 	
-	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage) {
-		return this.articleDao.getArticles(boardId, limitFrom, itemsInAPage);
+	public List<Article> getArticles(int boardId, String searchKeywordType, String searchKeyword, int limitFrom, int itemsInAPage) {
+		return this.articleDao.getArticles(boardId, searchKeywordType, searchKeyword, limitFrom, itemsInAPage);
 	}
 	
 	public void deleteArticle(int id) {
@@ -47,7 +47,7 @@ public class ArticleService {
 		return this.articleDao.getBoardNameById(boardId);
 	}
 	
-	public int getArticlesCnt(int boardId) {
-		return this.articleDao.getArticlesCnt(boardId);
+	public int getArticlesCnt(int boardId, String searchKeywordType, String searchKeyword) {
+		return this.articleDao.getArticlesCnt(boardId, searchKeywordType, searchKeyword);
 	}
 }

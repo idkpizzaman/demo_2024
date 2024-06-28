@@ -58,15 +58,16 @@ public class UsrArticleController {
 	}
 	
 	@GetMapping("/usr/article/list")
-	public String list(Model model, int boardId, @RequestParam(defaultValue = "1") int cPage) {
+	public String list(Model model, int boardId, @RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "title") String searchKeywordType,
+			@RequestParam(defaultValue = "") String searchKeyword) {
 		
 		String boardName = articleService.getBoardNameById(boardId);
-		int articlesCnt = articleService.getArticlesCnt(boardId);
+		int articlesCnt = articleService.getArticlesCnt(boardId, searchKeywordType, searchKeyword);
 		
 		int itemsInAPage = 10;
 		int limitFrom = (cPage - 1) * itemsInAPage;
 		
-		List<Article> articles = articleService.getArticles(boardId, limitFrom, itemsInAPage);
+		List<Article> articles = articleService.getArticles(boardId, searchKeywordType, searchKeyword, limitFrom, itemsInAPage);
 		
 		int from = ((cPage - 1) / 10) * 10 + 1;
 		int end =  (((cPage - 1) / 10) + 1) * 10;

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="ARTICLE DETAIL" />
+<c:set var="pageTitle" value="&nbsp;&nbsp;&nbsp;&nbsp;${article.id }번 글" />
 
 <%@ include file="../../common/head.jsp" %>
     <section class="mt-8 text-lg">
