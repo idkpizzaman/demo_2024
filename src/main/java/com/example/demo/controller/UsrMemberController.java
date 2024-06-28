@@ -17,9 +17,11 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UsrMemberController {
 	private MemberService memberService;
+	private Rq rq;
 	
-	public UsrMemberController(MemberService memberService) {
+	public UsrMemberController(MemberService memberService, Rq rq) {
 		this.memberService = memberService;
+		this.rq = rq;
 	}
 	
 	@GetMapping("/usr/member/dojoin")
@@ -64,10 +66,7 @@ public class UsrMemberController {
 	
 	@PostMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
-		
-		Rq rq = (Rq) req.getAttribute("rq");
-
+	public String doLogin(String loginId, String loginPw) {
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member == null) {
@@ -85,9 +84,7 @@ public class UsrMemberController {
 	
 	@GetMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req) {
-		Rq rq = (Rq) req.getAttribute("rq");
-		
+	public String doLogout() {
 		rq.logout();
 
 		return Util.jsReplace("정상적으로 로그아웃 되었습니다.", "/");

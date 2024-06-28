@@ -19,9 +19,11 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UsrArticleController {
 	
 	private ArticleService articleService;
+	private Rq rq;
 	
-	public UsrArticleController(ArticleService articleService) {
+	public UsrArticleController(ArticleService articleService, Rq rq) {
 		this.articleService = articleService;
+		this.rq = rq;
 	}
 	
 	@GetMapping("/usr/article/write")
@@ -31,10 +33,7 @@ public class UsrArticleController {
 	
 	@PostMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, int boardId, String title, String body) {
-		
-		Rq rq = (Rq) req.getAttribute("rq");
-		
+	public String doWrite(int boardId, String title, String body) {
 		articleService.writeArticle(rq.getLoginedMemberId(), boardId, title, body);
 		
 		int id = articleService.getLastInsertId();
