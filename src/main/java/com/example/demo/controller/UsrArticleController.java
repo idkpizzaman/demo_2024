@@ -31,11 +31,11 @@ public class UsrArticleController {
 	
 	@PostMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, String title, String body) {
+	public String doWrite(HttpServletRequest req, int boardId, String title, String body) {
 		
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		articleService.writeArticle(rq.getLoginedMemberId(), title, body);
+		articleService.writeArticle(rq.getLoginedMemberId(), boardId, title, body);
 		
 		int id = articleService.getLastInsertId();
 		
@@ -63,10 +63,12 @@ public class UsrArticleController {
 	public String list(Model model, int boardId) {
 		
 		String boardName = articleService.getBoardNameById(boardId);
+		int articlesCnt = articleService.getArticlesCnt(boardId);
 		
 		List<Article> articles = articleService.getArticles(boardId);
 		
 		model.addAttribute("boardName", boardName);
+		model.addAttribute("articlesCnt", articlesCnt);
 		model.addAttribute("articles", articles);
 		
 		return "usr/article/list";
