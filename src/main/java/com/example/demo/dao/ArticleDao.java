@@ -26,13 +26,14 @@ public interface ArticleDao {
 
 	@Select("""
 			SELECT A.*, M.nickname `writerName`
-				FROM article A
-				INNER JOIN `member` M
-				ON A.memberId = M.id
-				WHERE A.boardId = #{boardId}
-				ORDER BY A.id DESC
-			""")
-	public List<Article> getArticles(int boardId);
+			FROM article A
+			INNER JOIN `member` M
+			ON A.memberId = M.id
+			WHERE A.boardId = #{boardId}
+			ORDER BY A.id DESC
+			LIMIT #{limitFrom}, #{itemsInAPage}
+		""")
+public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage);
 
 	@Select("""
 			SELECT A.*, M.nickname `writerName`
