@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.LikePointService;
@@ -30,7 +29,7 @@ public class UsrLikePointController {
 	@ResponseBody
 	public String doLikePoint(String relTypeCode, int relId, boolean liked) {
 
-		if (likePointBtn) {
+		if (liked) {
 			likePointService.deleteLikePoint(rq.getLoginedMemberId(), relTypeCode, relId);
 			return "좋아요 취소";
 		}
