@@ -29,6 +29,10 @@
                         <th>내용</th>
                         <td>${article.body }</td>
                     </tr>
+                    <tr>
+                        <th>조회수</th>
+                        <td>${article.views }</td>
+                    </tr>
                 </table>
             </div>
             
@@ -39,6 +43,7 @@
                     <a class="btn btn-active btn-sm" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
                 </c:if>
             </div>
+            <button class=" mt-3 btn btn-active" onclick="">👍 좋아요 👍</button>
         </div>
     </section>
 <%@ include file="../../common/foot.jsp" %>

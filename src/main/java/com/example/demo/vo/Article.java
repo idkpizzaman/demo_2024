@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Article {
 	private int id;
+	private int views;
 	private String title;
 	private String body;
 	private String regDate;

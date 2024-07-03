@@ -19,6 +19,7 @@
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
+                            <th>조회수</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,6 +29,7 @@
                                 <td class="hover:underline"><a class="flex justify-center" href="detail?id=${article.id }">${article.title }</a></td>
                                 <td class="flex justify-center">${article.writerName }</td>
                                 <td><div class="flex justify-center">${article.updateDate.substring(2, 16) }</div></td>
+                                <td class="flex justify-center"><div>${article.views }</div></td>
                             </tr>
                         </c:forEach>
                     </tbody>
