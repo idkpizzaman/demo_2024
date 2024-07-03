@@ -98,8 +98,7 @@
                                 <span>${article.likePoint } 개</span>
                             </c:if>
                             <c:if test="${rq.getLoginedMemberId() != 0 }">
-                                <button id="likePointBtn" class="btn btn-sm btn-outline"></button>
-                                &nbsp;&nbsp;
+                                <button id="likePointBtn" class="btn btn-sm"></button>
                             </c:if>
                         </td>
                     </tr>

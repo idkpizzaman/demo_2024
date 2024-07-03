@@ -10,11 +10,13 @@ import com.example.demo.vo.ResultData;
 public class LikePointService {
 
 	private LikePointDao likePointDao;
+	
 	public LikePointService(LikePointDao likePointDao) {
 		this.likePointDao = likePointDao;
 	}
 	
 	public ResultData<Integer> getLikePoint(int loginedMemberId, String relTypeCode, int relId) {
+		
 		LikePoint likePoint = this.likePointDao.getLikePoint(loginedMemberId, relTypeCode, relId);
 		
 		int totalCnt = this.likePointDao.getTotalCnt(relTypeCode, relId);
