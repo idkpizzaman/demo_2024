@@ -17,4 +17,8 @@ public class Article {
 	private int memberId;
 	private String writerName;
 	private int likePoint;
+	
+	public String getForPrintBody() {
+		return this.body.replaceAll("\n", "<br />");
+	}
 }
