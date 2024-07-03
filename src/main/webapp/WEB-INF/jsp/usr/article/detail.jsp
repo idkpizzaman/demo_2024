@@ -12,7 +12,7 @@
             
             $('#likePointBtn').click(async function(){
                 
-                let likePointBtn = $('#likePointBtn').hasClass('btn-active');
+            	let liked = $('i.fa-heart').hasClass('fa-solid');
                 try{
                     await $.ajax({
                         url : '../likePoint/doLikePoint',
@@ -20,13 +20,13 @@
                         data : {
                             relTypeCode : 'article',
                             relId : ${article.id },
-                            likePointBtn : likePointBtn
+                            liked : liked
                         },
                     })
                     
                     let totalCnt = await getLikePoint();
                     
-                    $('#likePointCnt').html(totalCnt.data + ' 개');
+                    $('#likePointCnt').html(totalCnt.data);
                 } catch (error) {
                     console.log('Error : ', error);
                 }
@@ -34,6 +34,7 @@
         })
         
         const getLikePoint = async function(){
+        	let likePointBtn = $('#likePointBtn');
             return $.ajax({
                 url : '../likePoint/getLikePoint',
                 type : 'GET',
@@ -44,9 +45,15 @@
                 dataType : 'json',
                 success : function(data) {
                     if (data.success) {
-                        $('#likePointBtn').addClass('btn-active');
+                        $likePointBtn.html(`
+                            <i class="fa-solid fa-heart"></i>
+                            <span id="likePointCnt">${article.likePoint }</span>
+                        `);
                     } else {
-                        $('#likePointBtn').removeClass('btn-active');
+                    	likePointBtn.html(`
+                            <i class="fa-regular fa-heart"></i>
+                            <span id="likePointCnt">${article.likePoint }</span>
+                        `);
                     }
                 },
                 error : function(xhr, status, error) {
@@ -121,7 +128,7 @@
                     <a class="btn btn-active btn-sm" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
                 </c:if>
             </div>
-            <button class=" mt-3 btn btn-active" onclick="">👍 좋아요 👍</button>
+            <button class=" mt-3 btn btn-active" id="likePointBtn">👍 좋아요 👍</button>
         </div>
     </section>
 <%@ include file="../../common/foot.jsp" %>

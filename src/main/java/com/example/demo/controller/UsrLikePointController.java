@@ -22,13 +22,13 @@ public class UsrLikePointController {
 	
 	@GetMapping("/usr/likePoint/getLikePoint")
 	@ResponseBody
-	public ResultData<Integer> getMethodName(@RequestParam String param) {
+	public ResultData<Integer> getLikePoint(String relTypeCode, int relId) {
 		return likePointService.getLikePoint(rq.getLoginedMemberId(), relTypeCode, relId);
 	}
 	
 	@GetMapping("/usr/likePoint/doLikePoint")
 	@ResponseBody
-	public String doLikePoint(String relTypeCode, int relId, boolean likePointBtn) {
+	public String doLikePoint(String relTypeCode, int relId, boolean liked) {
 
 		if (likePointBtn) {
 			likePointService.deleteLikePoint(rq.getLoginedMemberId(), relTypeCode, relId);
