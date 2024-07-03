@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Reply {
 	private int id;
+	private String regDate;
+	private String updateDate;
 	private int memberId;
 	private String relTypeCode;
 	private int relId;
-	private int point;
+	private String body;
+	private String writerName;
 }

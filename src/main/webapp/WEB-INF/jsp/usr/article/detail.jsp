@@ -98,23 +98,8 @@
                                 <span>${article.likePoint } 개</span>
                             </c:if>
                             <c:if test="${rq.getLoginedMemberId() != 0 }">
-                                <button id="likePointBtn" class="btn btn-sm btn-outline">
-                                  좋아요
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                  </svg>
-                                </button>
+                                <button id="likePointBtn" class="btn btn-sm btn-outline"></button>
                                 &nbsp;&nbsp;
-                                <span id="likePointCnt">${article.likePoint } 개</span>
                             </c:if>
                         </td>
                     </tr>
@@ -128,9 +113,9 @@
                     <a class="btn btn-active btn-sm" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
                 </c:if>
             </div>
-            <button class=" mt-3 btn btn-active" id="likePointBtn">👍 좋아요 👍</button>
         </div>
     </section>
+    
     <script>
         const replyForm_onSubmit = function(form){
             form.body.value = form.body.value.trim();
@@ -149,15 +134,25 @@
         <div class="container mx-auto px-3">
             <div class="text-lg">댓글</div>
 
-            <form action="../reply/doWrite" method="post" onsubmit="replyForm_onSubmit(this); return false;">
-                <input type="hidden" name="relTypeCode" value="article"/>
-                <input type="hidden" name="relId" value="${article.id }"/>
-                <div class="mt-4 reply-border p-4">
-                    <div class="mb-2"><span>닉네임</span></div>
-                    <textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요"></textarea>
-                    <div class="flex justify-end"><button class="btn btn-active btn-sm">작성</button></div>
+            <c:forEach var="reply" items="${replies }">
+                <div class="py-2 border-bottom-line pl-16">
+                    <div class="font-semibold">${reply.writerName }</div>
+                    <div class="text-lg my-1 ml-2">${reply.body }</div>
+                    <div class="text-xs text-gray-400">${reply.updateDate }</div>
                 </div>
-            </form>
+            </c:forEach>
+            
+            <c:if test="${rq.getLoginedMemberId() != 0 }">
+                <form action="../reply/doWrite" method="post" onsubmit="replyForm_onSubmit(this); return false;">
+                    <input type="hidden" name="relTypeCode" value="article"/>
+                    <input type="hidden" name="relId" value="${article.id }"/>
+                    <div class="mt-4 reply-border p-4">
+                        <div class="mb-2"><span>닉네임</span></div>
+                        <textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요"></textarea>
+                        <div class="flex justify-end"><button class="btn btn-active btn-sm">작성</button></div>
+                    </div>
+                </form>
+            </c:if>
         </div>
     </section>
 <%@ include file="../../common/foot.jsp" %>

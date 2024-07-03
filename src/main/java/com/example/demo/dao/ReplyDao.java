@@ -20,4 +20,14 @@ public interface ReplyDao {
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
+
+	@Select("""
+			SELECT R.*, M.nickname `writerName`
+				FROM reply R
+				INNER JOIN `member` M
+				ON R.memberId = M.id
+				WHERE R.relTypeCode = #{relTypeCode}
+				AND R.relId = #{relId}
+			""")
+	public void getReplies(String relTypeCode, int relId);
 }
