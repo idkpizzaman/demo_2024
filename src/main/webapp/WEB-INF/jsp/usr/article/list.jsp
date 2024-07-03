@@ -8,11 +8,19 @@
     
     <section class="my-8 text-lg">
         <div class="container mx-auto px-3">
-            <div class="mb-2 ml-3 text-sm">
+            <div class="mb-2 ml-3 text-sm flex justify-between items-end">
                 <div><span>총 : ${articlesCnt }개</span></div>    
             </div>
             <div class="table-box-type m-10">
-                <table>
+                <table class="table table-lg">
+                    <colgroup>
+                        <col width="60" />
+                        <col width="" />
+                        <col width="80" />
+                        <col width="200" />
+                        <col width="40" />
+                        <col width="40" />
+                    </colgroup>
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -20,16 +28,18 @@
                             <th>작성자</th>
                             <th>작성일</th>
                             <th>조회수</th>
+                            <th>추천수</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="article" items="${articles }">
-                            <tr>
-                                <td class="flex justify-center">${article.id }</td>
-                                <td class="hover:underline"><a class="flex justify-center" href="detail?id=${article.id }">${article.title }</a></td>
-                                <td class="flex justify-center">${article.writerName }</td>
-                                <td><div class="flex justify-center">${article.updateDate.substring(2, 16) }</div></td>
-                                <td class="flex justify-center"><div>${article.views }</div></td>
+                            <tr class="hover">
+                                <td>${article.id }</td>
+                                <td class="hover:underline"><a href="detail?id=${article.id }">${article.title }</a></td>
+                                <td>${article.writerName }</td>
+                                <td>${article.updateDate.substring(2, 16) }</td>
+                                <td>${article.views }</td>
+                                <td>${article.likePoint }</td>
                             </tr>
                         </c:forEach>
                     </tbody>
