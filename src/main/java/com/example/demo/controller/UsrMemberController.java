@@ -29,7 +29,7 @@ public class UsrMemberController {
 	
 	@GetMapping("/usr/member/loginIdDupChk")
 	@ResponseBody
-	public ResultData loginIdDupChk(String loginId) {
+	public ResultData<Member> loginIdDupChk(String loginId) {
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member != null) {

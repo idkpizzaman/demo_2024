@@ -36,7 +36,7 @@
                         <tr>
                             <th>내용</th>
                             <td>
-                                <div class="toast-ui-editor"><script type="text/x-template"></script></div>
+                                <input class="input input-ghost w-full h-200 max-w-xs" type="text" name="body" />
                             </td>
                         </tr>
                         <tr>
