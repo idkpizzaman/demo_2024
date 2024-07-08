@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,39 +22,30 @@ public class UsrMemberController {
 		this.rq = rq;
 	}
 	
-	@GetMapping("/usr/member/dojoin")
+	@GetMapping("/usr/member/join")
+	public String join() {
+		return "usr/member/join";
+	}
+	
+	@GetMapping("/usr/member/loginIdDupChk")
 	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		if (Util.isEmpty(loginId)) {
-			return ResultData.from("F-1", "아이디를 입력해주세요");
-		}
-		if (Util.isEmpty(loginPw)) {
-			return ResultData.from("F-2", "비밀번호를 입력해주세요");
-		}
-		if (Util.isEmpty(name)) {
-			return ResultData.from("F-3", "이름을 입력해주세요");
-		}
-		if (Util.isEmpty(nickname)) {
-			return ResultData.from("F-4", "닉네임을 입력해주세요");
-		}
-		if (Util.isEmpty(cellphoneNum)) {
-			return ResultData.from("F-5", "전화번호를 입력해주세요");
-		}
-		if (Util.isEmpty(email)) {
-			return ResultData.from("F-6", "이메일을 입력해주세요");
-		}
-
+	public ResultData loginIdDupChk(String loginId) {
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member != null) {
-			return ResultData.from("F-7", String.format("%s은(는) 이미 사용중인 아이디입니다", loginId));
+			return ResultData.from("F-1", String.format("[ %s ] 은(는) 이미 사용중인 아이디입니다", loginId));
 		}
+		
+		return ResultData.from("S-1", String.format("[ %s ] 은(는) 사용가능한 아이디입니다", loginId));
+	}
+	
+	@PostMapping("/usr/member/doJoin")
+	@ResponseBody
+	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 
 		memberService.joinMember(loginId, loginPw, name, nickname, cellphoneNum, email);
-
-		int id = memberService.getLastInsertId();
-
-		return ResultData.from("S-1", String.format("%s님이 가입되었습니다", nickname), memberService.getMemberById(id));		
+		
+		return Util.jsReplace(String.format("%s님이 가입되었습니다", nickname), "/");
 	}
 
 	@GetMapping("/usr/member/login")
@@ -97,5 +89,64 @@ public class UsrMemberController {
 		}
 		
 		return member.getNickname();
+	}
+	
+	@GetMapping("/usr/member/myPage")
+	public String myPage(Model model) {
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		model.addAttribute("member", member);
+		
+		return "usr/member/myPage";
+	}
+	
+	@GetMapping("/usr/member/checkPassword")
+	public String checkPassword(Model model, String loginId) {
+		model.addAttribute("loginId", loginId);
+		
+		return "usr/member/checkPassword";
+	}
+	
+	@GetMapping("/usr/member/passwordModify")
+	public String passwordModify() {
+		return "usr/member/passwordModify";
+	}
+	
+	@PostMapping("/usr/member/doCheckPassword")
+	public String doCheckPassword(Model model, String loginPw) {
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		model.addAttribute("member", member);
+		
+		return "usr/member/modify";
+	}
+	
+	@GetMapping("/usr/member/getMemberById")
+	@ResponseBody
+	public ResultData<Member> getMemberById() {
+
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+
+		return ResultData.from("S-1", "회원 조회 성공", member);
+	}
+	
+	@PostMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(String name, String nickname, String cellphoneNum, String email) {
+
+		memberService.memberModify(rq.getLoginedMemberId(), name, nickname, cellphoneNum, email);
+
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+
+		return Util.jsReplace(String.format("%s님의 회원정보가 수정되었습니다", member.getLoginId()), "myPage");
+	}
+	
+	@PostMapping("/usr/member/doPasswordModify")
+	@ResponseBody
+	public String doPasswordModify(String loginPw) {
+
+		memberService.doPasswordModify(rq.getLoginedMemberId(), loginPw);
+
+		return Util.jsReplace("비밀번호가 변경되었습니다", "myPage");
 	}
 }

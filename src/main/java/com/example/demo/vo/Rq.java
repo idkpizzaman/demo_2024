@@ -57,6 +57,5 @@ public class Rq {
 	}
 	
 	public void init() {
-		
 	}
 }
