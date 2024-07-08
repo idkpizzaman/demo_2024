@@ -11,9 +11,6 @@ import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class UsrMemberController {
 	private MemberService memberService;
@@ -94,6 +91,10 @@ public class UsrMemberController {
 	@ResponseBody
 	public String getNickname() {
 		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		if (member == null) {
+			return "로그인 정보 없음";
+		}
 		
 		return member.getNickname();
 	}

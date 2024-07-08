@@ -1,5 +1,5 @@
 $('select[data-value]').each(function(index, item) {
-
+    const Editor = require('@toast-ui/editor');
     const items = $(item);
 
     const defaultValue = items.attr('data-value').trim();

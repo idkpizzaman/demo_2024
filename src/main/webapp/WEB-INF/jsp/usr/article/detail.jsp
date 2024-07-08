@@ -9,10 +9,7 @@
     <script>
         $(document).ready(function(){
         	
-        	if (${rq.getLoginedMemberId() != 0}) {
-        		getNickname();
-        	}
-        	
+        	getNickname();
             getLikePoint();
             
             $('#likePointBtn').click(async function(){
@@ -80,6 +77,62 @@
                 }
         	})
         }
+        
+        let originalForm = null;
+        let originalId = null;
+        
+        const replyModifyForm = function(i){
+            
+            if (originalForm != null) {
+                replyModifyCancle(originalId);
+            }
+            
+            $.ajax({
+                url : '../reply/getReply',
+                type : 'GET',
+                data : {
+                    id : i
+                },
+                dataType : 'json',
+                success : function(data) {
+                    let replyForm = $('#' + i);
+                    
+                    originalForm = replyForm.html();
+                    originalId = i;
+                    
+                    let addHtml = `
+                        <form action="../reply/doModify" method="post" onsubmit="replyForm_onSubmit(this); return false;">
+                            <input type="hidden" name="id" value="\${data.data.id }"/>
+                            <input type="hidden" name="relId" value="\${data.data.relId }"/>
+                            <div class="mt-4 reply-border p-4">
+                                <div class="mb-3"><span id="replyNickname" class="font-semibold">\${data.data.writerName }</span></div>
+                                <textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요">\${data.data.body }</textarea>
+                                <div class="flex justify-end">
+                                    <button onclick="replyModifyCancle(\${i});" class="btn btn-active btn-sm">취소</button>
+                                    <button class="btn btn-active btn-sm mx-2">수정</button>
+                                </div>
+                            </div>
+                        </form>
+                    `;
+                    
+                    replyForm.html(addHtml);
+                    
+                },
+                error : function(xhr, status, error) {
+                    console.log(error);
+                }
+            })
+        }
+        
+        const replyModifyCancle = function(i){
+            let replyForm = $('#' + i);
+            
+            replyForm.html(originalForm);
+            
+            originalForm = null;
+            originalId = null;
+        }
+        
     </script>
 
     <section class="mt-8 text-lg">
@@ -128,7 +181,7 @@
                 <button class="btn btn-active btn-sm" onclick="history.back();">뒤로가기</button>
                 <c:if test="${rq.getLoginedMemberId() == article.memberId }">
                     <a class="btn btn-active btn-sm" href="modify?id=${article.id }">수정</a>
-                    <a class="btn btn-active btn-sm" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
+                    <a class="btn btn-active btn-sm" href="doDelete?id=${article.id }&boardId=${aticle.boardId }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
                 </c:if>
             </div>
         </div>
@@ -151,10 +204,26 @@
     <section class="my-5 text-base">
         <div class="container mx-auto px-3">
             <div class="text-lg">댓글</div>
-
+            
             <c:forEach var="reply" items="${replies }">
-                <div class="py-2 border-bottom-line pl-16">
-                    <div class="font-semibold">${reply.writerName }</div>
+                <div id="${reply.id }" class="py-2 border-bottom-line pl-16">
+                    <div class="flex justify-between items-end">
+                        <div class="font-semibold">${reply.writerName }</div>
+
+                        <c:if test="${rq.getLoginedMemberId() == reply.memberId }">
+                            <div class="dropdown dropdown-end">
+                                <button class="btn btn-circle btn-ghost btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                                <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-20 p-2 shadow">
+                                    <li><a onclick="replyModifyForm(${reply.id });">수정</a></li>
+                                    <li><a href="../reply/doDelete?id=${reply.id }&relId=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a></li>
+                                </ul>
+                            </div>
+                        </c:if>
+                    </div>
                     <div class="text-lg my-1 ml-2">${reply.getForPrintBody() }</div>
                     <div class="text-xs text-gray-400">${reply.updateDate }</div>
                 </div>

@@ -9,7 +9,7 @@ import com.example.demo.vo.LikePoint;
 
 @Mapper
 public interface LikePointDao {
-
+	
 	@Select("""
 			SELECT *
 				FROM likePoint
@@ -26,7 +26,7 @@ public interface LikePointDao {
 				AND relId = #{relId}
 			""")
 	public int getTotalCnt(String relTypeCode, int relId);
-
+	
 	@Insert("""
 			INSERT INTO likePoint
 				SET memberId = #{loginedMemberId}
